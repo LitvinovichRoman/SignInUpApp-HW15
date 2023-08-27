@@ -18,6 +18,7 @@ final class WelcomeVC: UIViewController {
         
         signInButton.layer.cornerRadius = signInButton.frame.size.height / 2
         signInButton.layer.masksToBounds = true
+        
     }
     override func viewDidLoad() {
         super.viewDidLoad()

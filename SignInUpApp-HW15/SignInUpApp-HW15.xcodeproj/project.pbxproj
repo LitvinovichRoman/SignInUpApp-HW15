@@ -18,6 +18,7 @@
 		5A2DA9152A9610CC002039B6 /* WelcomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2DA9142A9610CC002039B6 /* WelcomeVC.swift */; };
 		5A2DA9172A961103002039B6 /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2DA9162A961103002039B6 /* SignUpVC.swift */; };
 		5AB92E2C2A96DA7400CA4773 /* UIVIewControllerExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AB92E2B2A96DA7400CA4773 /* UIVIewControllerExt.swift */; };
+		5AB92E2F2A9B630B00CA4773 /* VerificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AB92E2E2A9B630B00CA4773 /* VerificationService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,7 @@
 		5A2DA9142A9610CC002039B6 /* WelcomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeVC.swift; sourceTree = "<group>"; };
 		5A2DA9162A961103002039B6 /* SignUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
 		5AB92E2B2A96DA7400CA4773 /* UIVIewControllerExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIVIewControllerExt.swift; sourceTree = "<group>"; };
+		5AB92E2E2A9B630B00CA4773 /* VerificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +68,7 @@
 		5A2DA8F62A95F892002039B6 /* SignInUpApp-HW15 */ = {
 			isa = PBXGroup;
 			children = (
+				5AB92E2D2A9B62B000CA4773 /* Services */,
 				5AB92E2A2A96DA2500CA4773 /* Extensions */,
 				5A2DA90D2A95F90D002039B6 /* Controllers */,
 				5A2DA90C2A95F901002039B6 /* Views */,
@@ -112,6 +115,14 @@
 				5AB92E2B2A96DA7400CA4773 /* UIVIewControllerExt.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		5AB92E2D2A9B62B000CA4773 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				5AB92E2E2A9B630B00CA4773 /* VerificationService.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -187,6 +198,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5AB92E2F2A9B630B00CA4773 /* VerificationService.swift in Sources */,
 				5A2DA8F82A95F892002039B6 /* AppDelegate.swift in Sources */,
 				5A2DA8FA2A95F892002039B6 /* SceneDelegate.swift in Sources */,
 				5A2DA9132A961072002039B6 /* SignInVC.swift in Sources */,

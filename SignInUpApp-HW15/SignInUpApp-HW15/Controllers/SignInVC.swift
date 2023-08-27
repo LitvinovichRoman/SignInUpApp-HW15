@@ -21,11 +21,13 @@ final class SignInVC: BaseViewController {
         loginButton.layer.masksToBounds = true
         loginButton.isEnabled = false
         
+        
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        hideKeyboardWhenTappedAround()
     }
     
     
