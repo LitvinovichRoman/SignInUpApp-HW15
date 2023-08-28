@@ -5,7 +5,9 @@
 //  Created by Роман Литвинович on 27.08.23.
 //
 
+
 import Foundation
+
 enum PasswordStrength: Int {
     case veryWeak
     case weak
@@ -14,7 +16,8 @@ enum PasswordStrength: Int {
     case strong
 }
 
-enum VerificationService {
+class VerificationService {
+    
     static let weakRegex          = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$"
     static let notVeryWeakRegex   = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$"
     static let notVeryStrongRegex = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[$@$!%*#?&])[A-Za-z\\d$@$!%*#?&]{8,}$"
@@ -33,6 +36,7 @@ enum VerificationService {
             return .veryWeak
         }
     }
+    
     
     static func isValidEmail(email: String) -> Bool {
         let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"

@@ -111,19 +111,17 @@ final class SignUpVC: BaseViewController {
     
     @IBAction func continueButtonAction() {
         if let email = emailTF.text,
-              let password = passwordTF.text
-           {
-               let userModel = UserModel(userName: nameTF.text, email: email, pass: password)
-               performSegue(withIdentifier: "goToVerificationScreen", sender: userModel)
-           }
-       }
+           let password = passwordTF.text
+        {
+            let userModel = UserModel(userName: nameTF.text, email: email, pass: password)
+            performSegue(withIdentifier: "goToVerificationScreen", sender: userModel)
+        }
+    }
     
     private func setupStrongIndicatorsViews() {
         strongPassIndicatorsViews.enumerated().forEach { index, view in
-            if index <= (passwordStrength.rawValue - 1) {
-                view.alpha = 1
-            } else {
-                view.alpha = 0.2
+            UIView.animate(withDuration: 0.2) {
+                view.alpha = self.passwordStrength.rawValue - 1 >= index ? 1 : 0.3
             }
         }
     }
