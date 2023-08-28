@@ -20,14 +20,15 @@ final class SignUpVC: BaseViewController {
     //Text fields
     @IBOutlet private weak var emailTF: UITextField!
     @IBOutlet private weak var nameTF: UITextField!
-    @IBOutlet private weak var passwordTF: UITextField! { didSet {showButtonTapped() } }
-    @IBOutlet private weak var confirmPasswordTF: UITextField! 
+    @IBOutlet private weak var passwordTF: UITextField! { didSet { showButtonTapped() } }
+    @IBOutlet private weak var confirmPasswordTF: UITextField!
     
-    //Scroll view
+    //view
     @IBOutlet private weak var scrollView: UIScrollView!
+    @IBOutlet private weak var substrateView: UIView!
     
     //indicator
-    @IBOutlet var strongPassIndicatorsViews: [UIView]!
+    @IBOutlet private var strongPassIndicatorsViews: [UIView]!
     
     //validator
     private var isValidEmail = false { didSet { updateContinueButtonState() } }
@@ -61,6 +62,10 @@ final class SignUpVC: BaseViewController {
         passwordImageView.tintColor = UIColor.systemGray4
         passwordTF.leftView = passwordImageView
         passwordTF.leftViewMode = .always
+        
+        substrateView.layer.cornerRadius = 30
+        substrateView.layer.masksToBounds = true
+        
         
     }
 
@@ -104,41 +109,52 @@ final class SignUpVC: BaseViewController {
         confirmPassError.isHidden = isConfPassword
     }
     
+  
     
+    @IBAction func continueButtonAction() {
+        if let email = emailTF.text,
+           let password = passwordTF.text,
+           let name = nameTF.text
+        {
+            let userModel = UserModel(name: name, email: email, pass: password)
+            performSegue(withIdentifier: "goToVerificationScreen", sender: userModel)
+        }
+    }
     
     private func setupStrongIndicatorsViews() {
-            strongPassIndicatorsViews.enumerated().forEach { index, view in
-                if index <= (passwordStrength.rawValue - 1) {
-                    view.alpha = 1
-                } else {
-                    view.alpha = 0.2
-                }
+        strongPassIndicatorsViews.enumerated().forEach { index, view in
+            if index <= (passwordStrength.rawValue - 1) {
+                view.alpha = 1
+            } else {
+                view.alpha = 0.2
             }
         }
+    }
     
     private func updateContinueButtonState() {
            continueButton.isEnabled = isValidEmail && isConfPassword && passwordStrength != .veryWeak
        }
-    
+// нужен fix
     @objc private func showButtonTapped() {
-        
-        let showButton = UIButton(type: .custom)
-        showButton.setImage(UIImage(systemName: "eye.slash.circle"), for: .normal)
-        showButton.tintColor = .gray
-        showButton.addTarget(self, action: #selector(showButtonTapped), for: .touchUpInside)
+          
+          let showButton = UIButton(type: .custom)
+          showButton.setImage(UIImage(systemName: "eye.slash.circle"), for: .normal)
+          showButton.tintColor = .gray
+          showButton.addTarget(self, action: #selector(showButtonTapped), for: .touchUpInside)
 
-        passwordTF.rightView = showButton
-        passwordTF.rightViewMode = .always
+          passwordTF.rightView = showButton
+          passwordTF.rightViewMode = .always
         
-        if passwordTF.isSecureTextEntry {
-            passwordTF.isSecureTextEntry = false // Показать скрытое содержимое
-            showButton.setImage(UIImage(systemName: "eye.slash.circle.fill"), for: .normal)
-        } else {
-            passwordTF.isSecureTextEntry = true // Скрыть содержимое
-            showButton.setImage(UIImage(systemName: "eye.slash.circle"), for: .normal)
-        }
-    }
+          if passwordTF.isSecureTextEntry {
+              passwordTF.isSecureTextEntry = false // Показать скрытое содержимое
+              showButton.setImage(UIImage(systemName: "eye.circle"), for: .normal)
+          } else {
+              passwordTF.isSecureTextEntry = true // Скрыть содержимое
+              showButton.setImage(UIImage(systemName: "eye.slash.circle.fill"), for: .normal)
+          }
+      }
 
+    
     
     private func startKeyboardObserver() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
@@ -162,15 +178,11 @@ final class SignUpVC: BaseViewController {
        
     
     
-    
-    
-    /*
-     // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    //Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        guard let destVC = segue.destination as? VerificationsVC,
+              let userModel = sender as? UserModel else { return }
+        destVC.userModel = userModel
     }
-    */
+    
 }
