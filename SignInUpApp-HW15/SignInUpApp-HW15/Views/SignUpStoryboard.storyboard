@@ -100,7 +100,7 @@
                                                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="   Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="B2g-5a-VOd">
                                                                         <rect key="frame" x="0.0" y="85.333333333333314" width="390" height="17"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                                        <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                                                        <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="name"/>
                                                                         <connections>
                                                                             <action selector="passTFAction:" destination="Y6W-OH-hqX" eventType="editingChanged" id="yuf-QE-VGC"/>
                                                                         </connections>
@@ -160,10 +160,10 @@
                                                                         <color key="textColor" systemColor="systemRedColor"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
-                                                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Confirm password" textAlignment="natural" minimumFontSize="17" disabledBackground="eye" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Cyj-Vw-4aP">
+                                                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Confirm password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Cyj-Vw-4aP">
                                                                         <rect key="frame" x="0.0" y="0.0" width="390" height="17"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                                        <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                                                        <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="name"/>
                                                                         <connections>
                                                                             <action selector="confPassTFAction:" destination="Y6W-OH-hqX" eventType="editingChanged" id="c5B-xg-vL6"/>
                                                                         </connections>
@@ -186,7 +186,7 @@
                                                                     <color key="baseBackgroundColor" red="0.41839910650000001" green="0.22092163719999999" blue="0.55358455149999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                                 </buttonConfiguration>
                                                                 <connections>
-                                                                    <action selector="continueButtonAction" destination="Y6W-OH-hqX" eventType="touchUpInside" id="kcg-aZ-kwI"/>
+                                                                    <action selector="continueButtonAction" destination="Y6W-OH-hqX" eventType="touchUpInside" id="RLt-FK-5Mu"/>
                                                                 </connections>
                                                             </button>
                                                         </subviews>
@@ -279,7 +279,6 @@
         <!--VerificationsVC-->
         <scene sceneID="mZ2-TZ-X4g">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Hjw-PY-hXb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <viewController id="68v-UM-yKA" customClass="VerificationsVC" customModule="SignInUpApp_HW15" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="gIy-jT-oqV">
                         <rect key="frame" x="0.0" y="0.0" width="430" height="922"/>
@@ -368,12 +367,14 @@
                     <navigationItem key="navigationItem" id="LIh-CJ-ZjZ"/>
                     <connections>
                         <outlet property="centerYConstraint" destination="8bu-LO-NWp" id="X8m-Ue-bTD"/>
+                        <outlet property="codeTF" destination="PZA-6n-qGz" id="NBx-l7-ZSb"/>
                         <outlet property="errorCodeLbl" destination="fA7-ei-wmJ" id="48l-ew-HM8"/>
                         <outlet property="infoLabel" destination="1vH-3F-8VA" id="44c-fS-B86"/>
                         <outlet property="subView" destination="9bo-A8-jWe" id="2V4-N6-7oD"/>
                         <segue destination="zaY-6p-pba" kind="show" identifier="goToHelloScreen" id="bDj-Cm-IJ0"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Hjw-PY-hXb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1042" y="4"/>
         </scene>
@@ -453,7 +454,6 @@
     </scenes>
     <color key="tintColor" red="0.31369701779999998" green="0.16263775450000001" blue="0.41775127369999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
     <resources>
-        <image name="eye" catalog="system" width="128" height="79"/>
         <systemColor name="labelColor">
             <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

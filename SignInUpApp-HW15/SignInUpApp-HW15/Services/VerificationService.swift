@@ -14,8 +14,7 @@ enum PasswordStrength: Int {
     case strong
 }
 
-class VerificationService {
-    
+enum VerificationService {
     static let weakRegex          = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$"
     static let notVeryWeakRegex   = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$"
     static let notVeryStrongRegex = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[$@$!%*#?&])[A-Za-z\\d$@$!%*#?&]{8,}$"

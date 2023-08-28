@@ -8,32 +8,35 @@
 import UIKit
 
 final class SignUpVC: BaseViewController {
-    //Button
+    // Button
     @IBOutlet private var signInButton: UIButton!
-    @IBOutlet private weak var continueButton: UIButton!
+    @IBOutlet private var continueButton: UIButton!
     
-    //Error label
+    // Error label
     @IBOutlet private var emailErrorLabel: UILabel!
     @IBOutlet private var passErrorLabel: UILabel!
     @IBOutlet private var confirmPassError: UILabel!
     
-    //Text fields
-    @IBOutlet private weak var emailTF: UITextField!
-    @IBOutlet private weak var nameTF: UITextField!
-    @IBOutlet private weak var passwordTF: UITextField! { didSet { showButtonTapped() } }
-    @IBOutlet private weak var confirmPasswordTF: UITextField!
+    // Text fields
+    @IBOutlet private var emailTF: UITextField!
+    @IBOutlet private var nameTF: UITextField!
+    @IBOutlet private var passwordTF: UITextField! //{ didSet { showButtonTapped() } }
+    @IBOutlet private var confirmPasswordTF: UITextField!
     
-    //view
-    @IBOutlet private weak var scrollView: UIScrollView!
-    @IBOutlet private weak var substrateView: UIView!
+    // view
+    @IBOutlet private var scrollView: UIScrollView!
+    @IBOutlet private var substrateView: UIView!
     
-    //indicator
+    // indicator
     @IBOutlet private var strongPassIndicatorsViews: [UIView]!
     
-    //validator
+    // validator
     private var isValidEmail = false { didSet { updateContinueButtonState() } }
     private var isConfPassword = false { didSet { updateContinueButtonState() } }
-    private var passwordStrength: PasswordStrength = .veryWeak { didSet { updateContinueButtonState() } }
+    private var passwordStrength: PasswordStrength = PasswordStrength.veryWeak {
+        didSet { updateContinueButtonState() }
+        
+    }
     
     private func setupUI() {
         signInButton.layer.cornerRadius = signInButton.frame.size.height / 2
@@ -65,8 +68,6 @@ final class SignUpVC: BaseViewController {
         
         substrateView.layer.cornerRadius = 30
         substrateView.layer.masksToBounds = true
-        
-        
     }
 
     override func viewDidLoad() {
@@ -78,8 +79,7 @@ final class SignUpVC: BaseViewController {
     }
 
     @IBAction func emailTFAction(_ sender: UITextField) {
-        if let email = sender.text, !email.isEmpty, VerificationService.isValidEmail(email: email)
-        {
+        if let email = sender.text, !email.isEmpty, VerificationService.isValidEmail(email: email) {
             isValidEmail = true
         } else {
             isValidEmail = false
@@ -109,17 +109,14 @@ final class SignUpVC: BaseViewController {
         confirmPassError.isHidden = isConfPassword
     }
     
-  
-    
     @IBAction func continueButtonAction() {
         if let email = emailTF.text,
-           let password = passwordTF.text,
-           let name = nameTF.text
-        {
-            let userModel = UserModel(name: name, email: email, pass: password)
-            performSegue(withIdentifier: "goToVerificationScreen", sender: userModel)
-        }
-    }
+              let password = passwordTF.text
+           {
+               let userModel = UserModel(userName: nameTF.text, email: email, pass: password)
+               performSegue(withIdentifier: "goToVerificationScreen", sender: userModel)
+           }
+       }
     
     private func setupStrongIndicatorsViews() {
         strongPassIndicatorsViews.enumerated().forEach { index, view in
@@ -132,30 +129,28 @@ final class SignUpVC: BaseViewController {
     }
     
     private func updateContinueButtonState() {
-           continueButton.isEnabled = isValidEmail && isConfPassword && passwordStrength != .veryWeak
-       }
-// нужен fix
-    @objc private func showButtonTapped() {
-          
-          let showButton = UIButton(type: .custom)
-          showButton.setImage(UIImage(systemName: "eye.slash.circle"), for: .normal)
-          showButton.tintColor = .gray
-          showButton.addTarget(self, action: #selector(showButtonTapped), for: .touchUpInside)
+        continueButton.isEnabled = isValidEmail && isConfPassword && passwordStrength != .veryWeak
+    }
 
-          passwordTF.rightView = showButton
-          passwordTF.rightViewMode = .always
-        
-          if passwordTF.isSecureTextEntry {
-              passwordTF.isSecureTextEntry = false // Показать скрытое содержимое
-              showButton.setImage(UIImage(systemName: "eye.circle"), for: .normal)
-          } else {
-              passwordTF.isSecureTextEntry = true // Скрыть содержимое
-              showButton.setImage(UIImage(systemName: "eye.slash.circle.fill"), for: .normal)
-          }
-      }
+    // нужен fix
+//    @objc private func showButtonTapped() {
+//        let showButton = UIButton(type: .custom)
+//        showButton.setImage(UIImage(systemName: "eye.slash.circle"), for: .normal)
+//        showButton.tintColor = .gray
+//        showButton.addTarget(self, action: #selector(showButtonTapped), for: .touchUpInside)
+//
+//        passwordTF.rightView = showButton
+//        passwordTF.rightViewMode = .always
+//
+//        if passwordTF.isSecureTextEntry {
+//            passwordTF.isSecureTextEntry = false // Показать скрытое содержимое
+//            showButton.setImage(UIImage(systemName: "eye.circle"), for: .normal)
+//        } else {
+//            passwordTF.isSecureTextEntry = true // Скрыть содержимое
+//            showButton.setImage(UIImage(systemName: "eye.slash.circle.fill"), for: .normal)
+//        }
+//    }
 
-    
-    
     private func startKeyboardObserver() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -176,13 +171,11 @@ final class SignUpVC: BaseViewController {
         scrollView.scrollIndicatorInsets = contentInsets
     }
        
-    
-    
-    //Navigation
+    // Navigation
+   
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let destVC = segue.destination as? VerificationsVC,
               let userModel = sender as? UserModel else { return }
         destVC.userModel = userModel
     }
-    
 }

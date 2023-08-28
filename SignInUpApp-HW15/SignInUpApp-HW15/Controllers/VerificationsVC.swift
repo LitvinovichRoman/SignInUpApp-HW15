@@ -7,18 +7,20 @@
 
 import UIKit
 
-final class VerificationsVC: BaseViewController{
+ class VerificationsVC: BaseViewController {
+    
     var userModel: UserModel?
+    
     private let randomInt = Int.random(in: 100000 ... 999999)
     var sleepTime = 3
     
-    @IBOutlet weak private var infoLabel: UILabel!
-    @IBOutlet weak private var subView: UIView!
-    @IBOutlet weak private var errorCodeLbl: UILabel!
-    @IBOutlet weak private var codeTF: UITextField!
-    @IBOutlet weak private var centerYConstraint: NSLayoutConstraint!
+    @IBOutlet private var infoLabel: UILabel!
+    @IBOutlet private var subView: UIView!
+    @IBOutlet private var errorCodeLbl: UILabel!
+    @IBOutlet private var codeTF: UITextField!
+    @IBOutlet private var centerYConstraint: NSLayoutConstraint!
     
-    private func setupUI(){
+    private func setupUI() {
         subView.layer.cornerRadius = 30
         subView.layer.masksToBounds = true
         
@@ -36,8 +38,8 @@ final class VerificationsVC: BaseViewController{
         errorCodeLbl.isHidden = true
         guard let text = sender.text,
               !text.isEmpty,
-              text == randomInt.description else {
-            
+              text == randomInt.description
+        else {
             errorCodeLbl.isHidden = false
             sender.isUserInteractionEnabled = false
             errorCodeLbl.text = "Error code. Please wait \(sleepTime) seconds"
@@ -54,37 +56,27 @@ final class VerificationsVC: BaseViewController{
         performSegue(withIdentifier: "goToHelloScreen", sender: nil)
     }
     
-      private func startKeyboardObserver() {
-          NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-          NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-      }
-      
-      @objc private func keyboardWillShow(notification: Notification) {
-          guard let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else { return }
-          centerYConstraint.constant -= keyboardSize.height / 2
-      }
-      
-      @objc private func keyboardWillHide(notification: Notification) {
-          guard let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else { return }
-          centerYConstraint.constant += keyboardSize.height / 2
-      }
-      
-      
-      // MARK: - Navigation
-
-//      override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//          guard let destVC = segue.destination as? WelcomeVC else { return }
-//          destVC.userModel = userModel
-//      }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    private func startKeyboardObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
-    */
-
+      
+    @objc private func keyboardWillShow(notification: Notification) {
+        guard let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else { return }
+        centerYConstraint.constant -= keyboardSize.height / 2
+    }
+      
+    @objc private func keyboardWillHide(notification: Notification) {
+        guard let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else { return }
+        centerYConstraint.constant += keyboardSize.height / 2
+    }
+      
+    // MARK: - Navigation
+    
+         override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+             if let helloVC = segue.destination as? HelloVC {
+                 helloVC.userModel = userModel
+             }
+         }
+     
 }
