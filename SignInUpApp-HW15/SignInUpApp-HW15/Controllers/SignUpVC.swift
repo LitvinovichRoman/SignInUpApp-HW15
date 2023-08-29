@@ -11,7 +11,7 @@ final class SignUpVC: BaseViewController {
     // Button
     @IBOutlet private var signInButton: UIButton!
     @IBOutlet private var continueButton: UIButton!
-    
+    @IBOutlet weak var showPassButton: UIButton!
     // Error label
     @IBOutlet private var emailErrorLabel: UILabel!
     @IBOutlet private var passErrorLabel: UILabel!
@@ -20,7 +20,7 @@ final class SignUpVC: BaseViewController {
     // Text fields
     @IBOutlet private var emailTF: UITextField!
     @IBOutlet private var nameTF: UITextField!
-    @IBOutlet private var passwordTF: UITextField! //{ didSet { showButtonTapped() } }
+    @IBOutlet private var passwordTF: UITextField!
     @IBOutlet private var confirmPasswordTF: UITextField!
     
     // view
@@ -28,15 +28,13 @@ final class SignUpVC: BaseViewController {
     @IBOutlet private var substrateView: UIView!
     
     // indicator
-    @IBOutlet private var strongPassIndicatorsViews: [UIView]!
+    @IBOutlet var strongPassIndicatorsViews: [UIView]!
     
+  
     // validator
     private var isValidEmail = false { didSet { updateContinueButtonState() } }
     private var isConfPassword = false { didSet { updateContinueButtonState() } }
-    private var passwordStrength: PasswordStrength = PasswordStrength.veryWeak {
-        didSet { updateContinueButtonState() }
-        
-    }
+    private var passwordStrength: PasswordStrength = .veryWeak { didSet { updateContinueButtonState() } }
     
     private func setupUI() {
         signInButton.layer.cornerRadius = signInButton.frame.size.height / 2
@@ -65,7 +63,7 @@ final class SignUpVC: BaseViewController {
         passwordImageView.tintColor = UIColor.systemGray4
         passwordTF.leftView = passwordImageView
         passwordTF.leftViewMode = .always
-        
+
         substrateView.layer.cornerRadius = 30
         substrateView.layer.masksToBounds = true
     }
@@ -111,17 +109,19 @@ final class SignUpVC: BaseViewController {
     
     @IBAction func continueButtonAction() {
         if let email = emailTF.text,
-           let password = passwordTF.text
-        {
-            let userModel = UserModel(userName: nameTF.text, email: email, pass: password)
-            performSegue(withIdentifier: "goToVerificationScreen", sender: userModel)
-        }
-    }
+              let password = passwordTF.text
+           {
+               let userModel = UserModel(userName: nameTF.text, email: email, pass: password)
+               performSegue(withIdentifier: "goToVerificationScreen", sender: userModel)
+           }
+       }
     
-    private func setupStrongIndicatorsViews() {
+    private func setupStrongIndicatorsViews()  {
         strongPassIndicatorsViews.enumerated().forEach { index, view in
-            UIView.animate(withDuration: 0.2) {
-                view.alpha = self.passwordStrength.rawValue - 1 >= index ? 1 : 0.3
+            if index <= (passwordStrength.rawValue - 1) {
+                view.alpha = 1
+            } else {
+                view.alpha = 0.2
             }
         }
     }
@@ -130,6 +130,19 @@ final class SignUpVC: BaseViewController {
         continueButton.isEnabled = isValidEmail && isConfPassword && passwordStrength != .veryWeak
     }
 
+    @IBAction func showButtonTaped(_ sender: UIButton) {
+        passwordTF.isSecureTextEntry.toggle()
+                if passwordTF.isSecureTextEntry {
+                    if let image = UIImage(systemName: "eye.fill") {
+                        sender.setImage(image, for: .normal)
+                    }
+                } else {
+                    if let image = UIImage(systemName: "eye.slash.fill") {
+                        sender.setImage(image, for: .normal)
+                    }
+                }
+            }
+    
     // нужен fix
 //    @objc private func showButtonTapped() {
 //        let showButton = UIButton(type: .custom)
@@ -170,7 +183,6 @@ final class SignUpVC: BaseViewController {
     }
        
     // Navigation
-   
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let destVC = segue.destination as? VerificationsVC,
               let userModel = sender as? UserModel else { return }
