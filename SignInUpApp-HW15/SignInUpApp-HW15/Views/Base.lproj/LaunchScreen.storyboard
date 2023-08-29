@@ -16,18 +16,18 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="c6b-fZ-V9a">
-                                <rect key="frame" x="20" y="373" width="353" height="107"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="u7G-y1-7UC">
+                                <rect key="frame" x="20" y="339" width="353" height="101.33333333333331"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Homework 15" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mQf-WZ-Vn4">
-                                        <rect key="frame" x="30.333333333333343" y="0.0" width="292.66666666666663" height="58.333333333333336"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Homework" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mQf-WZ-Vn4">
+                                        <rect key="frame" x="0.0" y="0.0" width="353" height="58.333333333333336"/>
                                         <fontDescription key="fontDescription" name="SnellRoundhand-Black" family="Snell Roundhand" pointSize="46"/>
                                         <color key="textColor" red="0.26284065849999999" green="0.13878420799999999" blue="0.34776491110000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Registration App" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KCS-DB-4ij">
-                                        <rect key="frame" x="60.666666666666686" y="66.333333333333314" width="232" height="40.666666666666657"/>
-                                        <fontDescription key="fontDescription" name="SnellRoundhand-Bold" family="Snell Roundhand" pointSize="32"/>
+                                        <rect key="frame" x="0.0" y="68.333333333333314" width="353" height="33"/>
+                                        <fontDescription key="fontDescription" name="SnellRoundhand-Bold" family="Snell Roundhand" pointSize="26"/>
                                         <color key="textColor" red="0.26284065849999999" green="0.13878420799999999" blue="0.34776491110000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -37,10 +37,9 @@
                         <viewLayoutGuide key="safeArea" id="UAW-rP-n0t"/>
                         <color key="backgroundColor" systemColor="systemGray6Color"/>
                         <constraints>
-                            <constraint firstItem="UAW-rP-n0t" firstAttribute="bottom" secondItem="c6b-fZ-V9a" secondAttribute="bottom" constant="338" id="8We-Gy-Swu"/>
-                            <constraint firstItem="c6b-fZ-V9a" firstAttribute="leading" secondItem="UAW-rP-n0t" secondAttribute="leading" constant="20" id="Bjc-Os-bBp"/>
-                            <constraint firstItem="UAW-rP-n0t" firstAttribute="trailing" secondItem="c6b-fZ-V9a" secondAttribute="trailing" constant="20" id="CZb-PC-AtO"/>
-                            <constraint firstItem="c6b-fZ-V9a" firstAttribute="top" secondItem="UAW-rP-n0t" secondAttribute="top" constant="314" id="KCD-E3-BQU"/>
+                            <constraint firstItem="u7G-y1-7UC" firstAttribute="top" secondItem="UAW-rP-n0t" secondAttribute="top" constant="280" id="Rav-ii-1S3"/>
+                            <constraint firstItem="UAW-rP-n0t" firstAttribute="trailing" secondItem="u7G-y1-7UC" secondAttribute="trailing" constant="20" id="Sw1-q9-dd5"/>
+                            <constraint firstItem="u7G-y1-7UC" firstAttribute="leading" secondItem="UAW-rP-n0t" secondAttribute="leading" constant="20" id="ffx-mZ-ljT"/>
                         </constraints>
                     </view>
                 </viewController>

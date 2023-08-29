@@ -8,37 +8,32 @@
 import UIKit
 
 final class SignInVC: BaseViewController {
-    
-    @IBOutlet weak private var passwordTF: UITextField!
-    @IBOutlet weak private var emailTF: UITextField!
-    @IBOutlet weak private var loginButton: UIButton!
-    @IBOutlet weak private var errorLabel: UILabel! {
+    @IBOutlet private var passwordTF: UITextField!
+    @IBOutlet private var emailTF: UITextField!
+    @IBOutlet private var loginButton: UIButton!
+    @IBOutlet private var errorLabel: UILabel! {
         didSet { errorLabel.isHidden = true }
     }
     
-    private func setupUI(){
+    private func setupUI() {
         loginButton.layer.cornerRadius = loginButton.frame.size.height / 2
         loginButton.layer.masksToBounds = true
         loginButton.isEnabled = false
-        
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        hideKeyboardWhenTappedAround()
     }
     
-    
-    
-
     /*
-    // MARK: - Navigation
+     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+         // Get the new view controller using segue.destination.
+         // Pass the selected object to the new view controller.
+     }
+     */
 }
