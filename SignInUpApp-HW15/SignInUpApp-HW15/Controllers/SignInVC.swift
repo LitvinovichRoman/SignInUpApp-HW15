@@ -10,15 +10,15 @@ import UIKit
 final class SignInVC: BaseViewController {
     @IBOutlet private var passwordTF: UITextField!
     @IBOutlet private var emailTF: UITextField!
-    @IBOutlet private var loginButton: UIButton!
+    @IBOutlet private var signInButton: UIButton!
     @IBOutlet private var errorLabel: UILabel! {
         didSet { errorLabel.isHidden = true }
     }
+    @IBOutlet weak var showButton: UIButton!
     
     private func setupUI() {
-        loginButton.layer.cornerRadius = loginButton.frame.size.height / 2
-        loginButton.layer.masksToBounds = true
-        loginButton.isEnabled = false
+        signInButton.layer.cornerRadius = signInButton.frame.size.height / 2
+        signInButton.layer.masksToBounds = true
     }
     
     override func viewDidLoad() {
@@ -26,14 +26,47 @@ final class SignInVC: BaseViewController {
         setupUI()
         hideKeyboardWhenTappedAround()
     }
-    
-    /*
-     // MARK: - Navigation
 
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-         // Get the new view controller using segue.destination.
-         // Pass the selected object to the new view controller.
-     }
-     */
+    override func viewWillAppear(_ animated: Bool) {
+        emailTF.text = ""
+        passwordTF.text = ""
+    }
+        
+    @IBAction func signInAction() {
+        errorLabel.isHidden = true
+        guard let email = emailTF.text,
+              let pass = passwordTF.text,
+              let userModel = UserDafultsService.getUserModel(),
+              email == userModel.email,
+              pass == userModel.pass
+        else {
+            errorLabel.isHidden = false
+            return
+        }
+            
+        goToTabBarController()
+    }
+    
+    private func goToTabBarController() {
+        let storyboard = UIStoryboard(name: "MainStoryboard", bundle: nil)
+        guard let vc = storyboard.instantiateViewController(withIdentifier: "TabBarController") as? TabBarController else { return }
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    @IBAction func showButtonTaped(_ sender: UIButton) {
+        passwordTF.isSecureTextEntry.toggle()
+                if passwordTF.isSecureTextEntry {
+                    if let image = UIImage(systemName: "eye.fill") {
+                        sender.setImage(image, for: .normal)
+                    }
+                } else {
+                    if let image = UIImage(systemName: "eye.slash.fill") {
+                        sender.setImage(image, for: .normal)
+                    }
+                }
+            }
 }
+
+
+
+

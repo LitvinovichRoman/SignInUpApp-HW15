@@ -1,21 +1,15 @@
 //
-//  SignUpVC.swift
+//  ProfileVC.swift
 //  SignInUpApp-HW15
 //
-//  Created by Роман Литвинович on 23.08.23.
+//  Created by Роман Литвинович on 30.08.23.
 //
 
 import UIKit
 
-final class SignUpVC: BaseViewController {
+final class ProfileVC: BaseViewController {
     // Button
-    @IBOutlet private var signInButton: UIButton!
-    @IBOutlet private var continueButton: UIButton!
-    @IBOutlet weak var showPassButton: UIButton! 
-    // Error label
-    @IBOutlet private var emailErrorLabel: UILabel!
-    @IBOutlet private var passErrorLabel: UILabel!
-    @IBOutlet private var confirmPassError: UILabel!
+    @IBOutlet private var updateeButton: UIButton!
     
     // Text fields
     @IBOutlet private var emailTF: UITextField!
@@ -23,25 +17,18 @@ final class SignUpVC: BaseViewController {
     @IBOutlet private var passwordTF: UITextField!
     @IBOutlet private var confirmPasswordTF: UITextField!
     
-    // view
-    @IBOutlet private var scrollView: UIScrollView!
-    @IBOutlet private var substrateView: UIView!
-    
-    // indicator
+    //views
     @IBOutlet var strongPassIndicatorsViews: [UIView]!
     
-  
+ 
     // validator
     private var isValidEmail = false { didSet { updateContinueButtonState() } }
     private var isConfPassword = false { didSet { updateContinueButtonState() } }
     private var passwordStrength: PasswordStrength = .veryWeak { didSet { updateContinueButtonState() } }
     
     private func setupUI() {
-        signInButton.layer.cornerRadius = signInButton.frame.size.height / 2
-        signInButton.layer.masksToBounds = true
-        
-        continueButton.layer.cornerRadius = continueButton.frame.size.height / 2
-        continueButton.layer.masksToBounds = true
+        updateeButton.layer.cornerRadius = updateeButton.frame.size.height / 2
+        updateeButton.layer.masksToBounds = true
        
         let personIcon = UIImage(systemName: "person.crop.circle")
         let personImageView = UIImageView(image: personIcon)
@@ -64,8 +51,7 @@ final class SignUpVC: BaseViewController {
         passwordTF.leftView = passwordImageView
         passwordTF.leftViewMode = .always
 
-        substrateView.layer.cornerRadius = 30
-        substrateView.layer.masksToBounds = true
+       
     }
 
     override func viewDidLoad() {
@@ -73,7 +59,7 @@ final class SignUpVC: BaseViewController {
         setupUI()
         strongPassIndicatorsViews.forEach { view in view.alpha = 0.2 }
         hideKeyboardWhenTappedAround()
-        startKeyboardObserver()
+       
     }
 
     @IBAction func emailTFAction(_ sender: UITextField) {
@@ -82,7 +68,6 @@ final class SignUpVC: BaseViewController {
         } else {
             isValidEmail = false
         }
-        emailErrorLabel.isHidden = isValidEmail
         setupStrongIndicatorsViews()
     }
     
@@ -92,7 +77,6 @@ final class SignUpVC: BaseViewController {
         } else {
             passwordStrength = .veryWeak
         }
-        passErrorLabel.isHidden = passwordStrength != .veryWeak
         setupStrongIndicatorsViews()
     }
     
@@ -104,7 +88,6 @@ final class SignUpVC: BaseViewController {
         } else {
             isConfPassword = false
         }
-        confirmPassError.isHidden = isConfPassword
     }
     
     @IBAction func continueButtonAction() {
@@ -127,47 +110,8 @@ final class SignUpVC: BaseViewController {
     }
     
     private func updateContinueButtonState() {
-        continueButton.isEnabled = isValidEmail && isConfPassword && passwordStrength != .veryWeak
+        updateeButton.isEnabled = isValidEmail && isConfPassword && passwordStrength != .veryWeak
     }
 
-    @IBAction func showButtonTaped(_ sender: UIButton) {
-        passwordTF.isSecureTextEntry.toggle()
-                if passwordTF.isSecureTextEntry {
-                    if let image = UIImage(systemName: "eye.fill") {
-                        sender.setImage(image, for: .normal)
-                    }
-                } else {
-                    if let image = UIImage(systemName: "eye.slash.fill") {
-                        sender.setImage(image, for: .normal)
-                    }
-                }
-            }
-
-
-    private func startKeyboardObserver() {
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
-
-    @objc private func keyboardWillShow(notification: Notification) {
-        guard let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
-            return
-        }
-        let contentInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: keyboardSize.height, right: 0.0)
-        scrollView.contentInset = contentInsets
-        scrollView.scrollIndicatorInsets = contentInsets
-    }
-
-    @objc private func keyboardWillHide() {
-        let contentInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0)
-        scrollView.contentInset = contentInsets
-        scrollView.scrollIndicatorInsets = contentInsets
-    }
-       
-    // Navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let destVC = segue.destination as? VerificationsVC,
-              let userModel = sender as? UserModel else { return }
-        destVC.userModel = userModel
-    }
+    
 }

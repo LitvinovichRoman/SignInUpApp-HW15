@@ -17,11 +17,17 @@
 		5A2DA9132A961072002039B6 /* SignInVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2DA9122A961072002039B6 /* SignInVC.swift */; };
 		5A2DA9152A9610CC002039B6 /* WelcomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2DA9142A9610CC002039B6 /* WelcomeVC.swift */; };
 		5A2DA9172A961103002039B6 /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2DA9162A961103002039B6 /* SignUpVC.swift */; };
+		5A609CAC2A9FE04900558721 /* InfoVС.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A609CAB2A9FE04900558721 /* InfoVС.swift */; };
+		5A609CAE2A9FF7AE00558721 /* ChangeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A609CAD2A9FF7AE00558721 /* ChangeVC.swift */; };
 		5A8E457A2A9D0FB400B52FA8 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A8E45792A9D0FB400B52FA8 /* UserModel.swift */; };
 		5A8E457D2A9D17D200B52FA8 /* VerificationsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A8E457C2A9D17D200B52FA8 /* VerificationsVC.swift */; };
 		5A8E457F2A9D34D700B52FA8 /* HelloVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A8E457E2A9D34D700B52FA8 /* HelloVC.swift */; };
+		5A90A90F2A9FA14F00673881 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A90A90E2A9FA14F00673881 /* TabBarController.swift */; };
+		5AA2C92D2A9E560F007950D7 /* UserDefaultsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AA2C92C2A9E560F007950D7 /* UserDefaultsService.swift */; };
+		5AA2C92F2A9E5690007950D7 /* UserDefaultsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AA2C92E2A9E5690007950D7 /* UserDefaultsExtension.swift */; };
 		5AB92E2C2A96DA7400CA4773 /* UIVIewControllerExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AB92E2B2A96DA7400CA4773 /* UIVIewControllerExt.swift */; };
 		5AB92E2F2A9B630B00CA4773 /* VerificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AB92E2E2A9B630B00CA4773 /* VerificationService.swift */; };
+		5ADDF6BF2A9FC6AF00DEA2B4 /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ADDF6BE2A9FC6AF00DEA2B4 /* ProfileVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,11 +43,17 @@
 		5A2DA9122A961072002039B6 /* SignInVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInVC.swift; sourceTree = "<group>"; };
 		5A2DA9142A9610CC002039B6 /* WelcomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeVC.swift; sourceTree = "<group>"; };
 		5A2DA9162A961103002039B6 /* SignUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
+		5A609CAB2A9FE04900558721 /* InfoVС.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "InfoVС.swift"; sourceTree = "<group>"; };
+		5A609CAD2A9FF7AE00558721 /* ChangeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeVC.swift; sourceTree = "<group>"; };
 		5A8E45792A9D0FB400B52FA8 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		5A8E457C2A9D17D200B52FA8 /* VerificationsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationsVC.swift; sourceTree = "<group>"; };
 		5A8E457E2A9D34D700B52FA8 /* HelloVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelloVC.swift; sourceTree = "<group>"; };
+		5A90A90E2A9FA14F00673881 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		5AA2C92C2A9E560F007950D7 /* UserDefaultsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsService.swift; sourceTree = "<group>"; };
+		5AA2C92E2A9E5690007950D7 /* UserDefaultsExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsExtension.swift; sourceTree = "<group>"; };
 		5AB92E2B2A96DA7400CA4773 /* UIVIewControllerExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIVIewControllerExt.swift; sourceTree = "<group>"; };
 		5AB92E2E2A9B630B00CA4773 /* VerificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationService.swift; sourceTree = "<group>"; };
+		5ADDF6BE2A9FC6AF00DEA2B4 /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,6 +126,10 @@
 				5A2DA9162A961103002039B6 /* SignUpVC.swift */,
 				5A8E457C2A9D17D200B52FA8 /* VerificationsVC.swift */,
 				5A8E457E2A9D34D700B52FA8 /* HelloVC.swift */,
+				5A90A90E2A9FA14F00673881 /* TabBarController.swift */,
+				5ADDF6BE2A9FC6AF00DEA2B4 /* ProfileVC.swift */,
+				5A609CAB2A9FE04900558721 /* InfoVС.swift */,
+				5A609CAD2A9FF7AE00558721 /* ChangeVC.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -130,6 +146,7 @@
 			isa = PBXGroup;
 			children = (
 				5AB92E2B2A96DA7400CA4773 /* UIVIewControllerExt.swift */,
+				5AA2C92E2A9E5690007950D7 /* UserDefaultsExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -138,6 +155,7 @@
 			isa = PBXGroup;
 			children = (
 				5AB92E2E2A9B630B00CA4773 /* VerificationService.swift */,
+				5AA2C92C2A9E560F007950D7 /* UserDefaultsService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -216,14 +234,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				5AB92E2F2A9B630B00CA4773 /* VerificationService.swift in Sources */,
+				5AA2C92D2A9E560F007950D7 /* UserDefaultsService.swift in Sources */,
+				5ADDF6BF2A9FC6AF00DEA2B4 /* ProfileVC.swift in Sources */,
+				5A609CAC2A9FE04900558721 /* InfoVС.swift in Sources */,
 				5A2DA8F82A95F892002039B6 /* AppDelegate.swift in Sources */,
 				5A8E457A2A9D0FB400B52FA8 /* UserModel.swift in Sources */,
 				5A2DA8FA2A95F892002039B6 /* SceneDelegate.swift in Sources */,
 				5A2DA9132A961072002039B6 /* SignInVC.swift in Sources */,
+				5A609CAE2A9FF7AE00558721 /* ChangeVC.swift in Sources */,
 				5A8E457F2A9D34D700B52FA8 /* HelloVC.swift in Sources */,
 				5A2DA9172A961103002039B6 /* SignUpVC.swift in Sources */,
 				5A8E457D2A9D17D200B52FA8 /* VerificationsVC.swift in Sources */,
 				5AB92E2C2A96DA7400CA4773 /* UIVIewControllerExt.swift in Sources */,
+				5A90A90F2A9FA14F00673881 /* TabBarController.swift in Sources */,
+				5AA2C92F2A9E5690007950D7 /* UserDefaultsExtension.swift in Sources */,
 				5A2DA9152A9610CC002039B6 /* WelcomeVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

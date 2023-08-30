@@ -8,7 +8,7 @@
 import Foundation
 
 struct UserModel {
-    let userName: String?
-    let email: String
-    let pass: String
+    var name: String?
+    var email: String
+    var pass: String
 }
