@@ -8,7 +8,6 @@
 import Foundation
 
 final class UserDafultsService {
-    
     static func saveUserModel(userModel: UserModel) {
         UserDefaults.standard.set(userModel.name, forKey: UserDefaults.Keys.name.rawValue)
         UserDefaults.standard.set(userModel.email, forKey: UserDefaults.Keys.email.rawValue)
@@ -25,7 +24,7 @@ final class UserDafultsService {
         return userModel
     }
     
-    static func cleanUserDefauts() {
+    static func cleanUserDefaults() {
         UserDefaults.standard.reset()
     }
 }

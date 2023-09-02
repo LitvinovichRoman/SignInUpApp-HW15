@@ -7,9 +7,9 @@
 
 import UIKit
 
- class VerificationsVC: BaseViewController {
+final class VerificationsVC: BaseViewController {
     
-    var userModel: UserModel?
+     var userModel: UserModel?
     
     private let randomInt = Int.random(in: 100000 ... 999999)
     var sleepTime = 3

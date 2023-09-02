@@ -14,13 +14,14 @@ final class SignInVC: BaseViewController {
     @IBOutlet private var errorLabel: UILabel! {
         didSet { errorLabel.isHidden = true }
     }
-    @IBOutlet weak var showButton: UIButton!
-    
+
+    @IBOutlet var showButton: UIButton!
+
     private func setupUI() {
         signInButton.layer.cornerRadius = signInButton.frame.size.height / 2
         signInButton.layer.masksToBounds = true
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
@@ -31,7 +32,7 @@ final class SignInVC: BaseViewController {
         emailTF.text = ""
         passwordTF.text = ""
     }
-        
+
     @IBAction func signInAction() {
         errorLabel.isHidden = true
         guard let email = emailTF.text,
@@ -43,30 +44,26 @@ final class SignInVC: BaseViewController {
             errorLabel.isHidden = false
             return
         }
-            
+
         goToTabBarController()
     }
-    
+
     private func goToTabBarController() {
         let storyboard = UIStoryboard(name: "MainStoryboard", bundle: nil)
         guard let vc = storyboard.instantiateViewController(withIdentifier: "TabBarController") as? TabBarController else { return }
         navigationController?.pushViewController(vc, animated: true)
     }
-    
+
     @IBAction func showButtonTaped(_ sender: UIButton) {
         passwordTF.isSecureTextEntry.toggle()
-                if passwordTF.isSecureTextEntry {
-                    if let image = UIImage(systemName: "eye.fill") {
-                        sender.setImage(image, for: .normal)
-                    }
-                } else {
-                    if let image = UIImage(systemName: "eye.slash.fill") {
-                        sender.setImage(image, for: .normal)
-                    }
-                }
+        if passwordTF.isSecureTextEntry {
+            if let image = UIImage(systemName: "eye.fill") {
+                sender.setImage(image, for: .normal)
             }
+        } else {
+            if let image = UIImage(systemName: "eye.slash.fill") {
+                sender.setImage(image, for: .normal)
+            }
+        }
+    }
 }
-
-
-
-

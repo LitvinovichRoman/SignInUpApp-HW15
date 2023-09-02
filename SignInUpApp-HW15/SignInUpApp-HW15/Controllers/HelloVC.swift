@@ -9,7 +9,7 @@ import UIKit
 
 final class HelloVC: UIViewController {
     
-    var userModel: UserModel?
+     var userModel: UserModel?
     
     @IBOutlet private var infoLabel: UILabel!
     @IBOutlet private var subView: UIView!

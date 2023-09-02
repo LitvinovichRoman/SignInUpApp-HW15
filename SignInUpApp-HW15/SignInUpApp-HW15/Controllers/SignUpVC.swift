@@ -11,7 +11,7 @@ final class SignUpVC: BaseViewController {
     // Button
     @IBOutlet private var signInButton: UIButton!
     @IBOutlet private var continueButton: UIButton!
-    @IBOutlet weak var showPassButton: UIButton! 
+    @IBOutlet private weak var showPassButton: UIButton!
     // Error label
     @IBOutlet private var emailErrorLabel: UILabel!
     @IBOutlet private var passErrorLabel: UILabel!

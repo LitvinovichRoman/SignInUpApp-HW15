@@ -24,14 +24,14 @@ class ChangeVC: UIViewController {
         logoutButton.layer.cornerRadius = logoutButton.frame.size.height / 2
         logoutButton.layer.masksToBounds = true
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    
+    @IBAction func deleteButtonAction() {
+        UserDafultsService.cleanUserDefaults()
     }
-    */
-
+    @IBAction func logoutButtonAction(_ sender: UIButton) {
+        let storyboard = UIStoryboard(name: "MainStoryboard", bundle: nil)
+        guard storyboard.instantiateViewController(withIdentifier: "InfoVС") is InfoVC else { return }
+        navigationController?.popToRootViewController(animated: true)
+        
+    }
 }

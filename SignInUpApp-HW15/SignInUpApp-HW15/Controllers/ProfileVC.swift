@@ -7,9 +7,14 @@
 
 import UIKit
 
-final class ProfileVC: BaseViewController {
+final class ProfileVC: BaseViewController, UIGestureRecognizerDelegate {
+    //model
+    var userModel: UserModel?
+    
     // Button
-    @IBOutlet private var updateeButton: UIButton!
+    @IBOutlet private var updateButton: UIButton!
+    @IBOutlet private weak var showPassButton: UIButton!
+
     
     // Text fields
     @IBOutlet private var emailTF: UITextField!
@@ -17,18 +22,31 @@ final class ProfileVC: BaseViewController {
     @IBOutlet private var passwordTF: UITextField!
     @IBOutlet private var confirmPasswordTF: UITextField!
     
-    //views
-    @IBOutlet var strongPassIndicatorsViews: [UIView]!
+    // Error label
+    @IBOutlet private var emailErrorLabel: UILabel!
+    @IBOutlet private var passErrorLabel: UILabel!
+    @IBOutlet private var confirmPassError: UILabel!
     
+    // view
+    @IBOutlet var strongPassIndicatorsViews: [UIView]!
+
  
     // validator
-    private var isValidEmail = false { didSet { updateContinueButtonState() } }
-    private var isConfPassword = false { didSet { updateContinueButtonState() } }
-    private var passwordStrength: PasswordStrength = .veryWeak { didSet { updateContinueButtonState() } }
+    private var isValidEmail = false { didSet { updateButtonState() } }
+    private var isConfPassword = false { didSet { updateButtonState() } }
+    private var passwordStrength: PasswordStrength = .veryWeak { didSet { updateButtonState() } }
+    
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+            return true
+        }
+    
+    @objc func hideKeyboardOnSwipeDown() {
+            view.endEditing(true)
+        }
     
     private func setupUI() {
-        updateeButton.layer.cornerRadius = updateeButton.frame.size.height / 2
-        updateeButton.layer.masksToBounds = true
+        updateButton.layer.cornerRadius = updateButton.frame.size.height / 2
+        updateButton.layer.masksToBounds = true
        
         let personIcon = UIImage(systemName: "person.crop.circle")
         let personImageView = UIImageView(image: personIcon)
@@ -50,6 +68,9 @@ final class ProfileVC: BaseViewController {
         passwordImageView.tintColor = UIColor.systemGray4
         passwordTF.leftView = passwordImageView
         passwordTF.leftViewMode = .always
+        
+        strongPassIndicatorsViews.forEach { view in view.alpha = 0.2 }
+
 
        
     }
@@ -57,9 +78,11 @@ final class ProfileVC: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        strongPassIndicatorsViews.forEach { view in view.alpha = 0.2 }
-        hideKeyboardWhenTappedAround()
-       
+        let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(self.hideKeyboardOnSwipeDown))
+                swipeDown.delegate = self
+        swipeDown.direction =  UISwipeGestureRecognizer.Direction.down
+                self.view.addGestureRecognizer(swipeDown)
+        
     }
 
     @IBAction func emailTFAction(_ sender: UITextField) {
@@ -68,6 +91,7 @@ final class ProfileVC: BaseViewController {
         } else {
             isValidEmail = false
         }
+        emailErrorLabel.isHidden = isValidEmail
         setupStrongIndicatorsViews()
     }
     
@@ -77,10 +101,12 @@ final class ProfileVC: BaseViewController {
         } else {
             passwordStrength = .veryWeak
         }
+        passErrorLabel.isHidden = passwordStrength != .veryWeak
         setupStrongIndicatorsViews()
     }
     
     @IBAction func confPassTFAction(_ sender: UITextField) {
+        updateButton.isEnabled = true
         if let confPasswordText = sender.text, !confPasswordText.isEmpty,
            let passwordText = passwordTF.text, !passwordText.isEmpty
         {
@@ -88,16 +114,31 @@ final class ProfileVC: BaseViewController {
         } else {
             isConfPassword = false
         }
+        confirmPassError.isHidden = isConfPassword
     }
     
-    @IBAction func continueButtonAction() {
+    @IBAction func updateButtonAction() {
+        updateButton.isEnabled = true
+
         if let email = emailTF.text,
-              let password = passwordTF.text
-           {
-               let userModel = UserModel(name: nameTF.text, email: email, pass: password)
-               performSegue(withIdentifier: "goToVerificationScreen", sender: userModel)
-           }
+           let password = passwordTF.text,
+           let name = nameTF.text
+        {
+            let userModel = UserModel(name: name, email: email, pass: password)
+            let _: () = UserDafultsService.saveUserModel(userModel: userModel)
+            
+            let storyboard = UIStoryboard(name: "MainStoryboard", bundle: nil)
+            guard let vc = storyboard.instantiateViewController(withIdentifier: "InfoVС") as? InfoVC else { return }
+            
+            vc.userModel = userModel
        }
+    }
+
+    
+    private func updateButtonState() {
+        updateButton.isEnabled = isValidEmail && isConfPassword && passwordStrength != .veryWeak
+        
+    }
     
     private func setupStrongIndicatorsViews()  {
         strongPassIndicatorsViews.enumerated().forEach { index, view in
@@ -108,10 +149,25 @@ final class ProfileVC: BaseViewController {
             }
         }
     }
-    
-    private func updateContinueButtonState() {
-        updateeButton.isEnabled = isValidEmail && isConfPassword && passwordStrength != .veryWeak
-    }
+ 
+    @IBAction func showButtonTaped(_ sender: UIButton) {
+        passwordTF.isSecureTextEntry.toggle()
+                if passwordTF.isSecureTextEntry {
+                    if let image = UIImage(systemName: "eye.fill") {
+                        sender.setImage(image, for: .normal)
+                    }
+                } else {
+                    if let image = UIImage(systemName: "eye.slash.fill") {
+                        sender.setImage(image, for: .normal)
+                    }
+                }
+            }
 
+  
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let destVC = segue.destination as? VerificationsVC,
+              let userModel = sender as? UserModel else { return }
+        destVC.userModel = userModel
+    }
     
 }
