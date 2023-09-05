@@ -1,21 +1,20 @@
 //
-//  SignUpVC.swift
+//  ProfileVC.swift
 //  SignInUpApp-HW15
 //
-//  Created by Роман Литвинович on 23.08.23.
+//  Created by Роман Литвинович on 30.08.23.
 //
 
 import UIKit
 
-final class SignUpVC: BaseViewController {
+final class ProfileVC: BaseViewController, UIGestureRecognizerDelegate {
+    //model
+    var userModel: UserModel?
+    
     // Button
-    @IBOutlet private var signInButton: UIButton!
-    @IBOutlet private var continueButton: UIButton!
+    @IBOutlet private var updateButton: UIButton!
     @IBOutlet private weak var showPassButton: UIButton!
-    // Error label
-    @IBOutlet private var emailErrorLabel: UILabel!
-    @IBOutlet private var passErrorLabel: UILabel!
-    @IBOutlet private var confirmPassError: UILabel!
+
     
     // Text fields
     @IBOutlet private var emailTF: UITextField!
@@ -23,25 +22,31 @@ final class SignUpVC: BaseViewController {
     @IBOutlet private var passwordTF: UITextField!
     @IBOutlet private var confirmPasswordTF: UITextField!
     
+    // Error label
+    @IBOutlet private var emailErrorLabel: UILabel!
+    @IBOutlet private var passErrorLabel: UILabel!
+    @IBOutlet private var confirmPassError: UILabel!
+    
     // view
-    @IBOutlet private var scrollView: UIScrollView!
-    @IBOutlet private var substrateView: UIView!
-    
-    // indicator
     @IBOutlet var strongPassIndicatorsViews: [UIView]!
-    
-  
+
+ 
     // validator
-    private var isValidEmail = false { didSet { updateContinueButtonState() } }
-    private var isConfPassword = false { didSet { updateContinueButtonState() } }
-    private var passwordStrength: PasswordStrength = .veryWeak { didSet { updateContinueButtonState() } }
+    private var isValidEmail = false { didSet { updateButtonState() } }
+    private var isConfPassword = false { didSet { updateButtonState() } }
+    private var passwordStrength: PasswordStrength = .veryWeak { didSet { updateButtonState() } }
+    
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+            return true
+        }
+    
+    @objc func hideKeyboardOnSwipeDown() {
+            view.endEditing(true)
+        }
     
     private func setupUI() {
-        signInButton.layer.cornerRadius = signInButton.frame.size.height / 2
-        signInButton.layer.masksToBounds = true
-        
-        continueButton.layer.cornerRadius = continueButton.frame.size.height / 2
-        continueButton.layer.masksToBounds = true
+        updateButton.layer.cornerRadius = updateButton.frame.size.height / 2
+        updateButton.layer.masksToBounds = true
        
         let personIcon = UIImage(systemName: "person.crop.circle")
         let personImageView = UIImageView(image: personIcon)
@@ -63,17 +68,21 @@ final class SignUpVC: BaseViewController {
         passwordImageView.tintColor = UIColor.systemGray4
         passwordTF.leftView = passwordImageView
         passwordTF.leftViewMode = .always
+        
+        strongPassIndicatorsViews.forEach { view in view.alpha = 0.2 }
 
-        substrateView.layer.cornerRadius = 30
-        substrateView.layer.masksToBounds = true
+
+       
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        strongPassIndicatorsViews.forEach { view in view.alpha = 0.2 }
-        hideKeyboardWhenTappedAround()
-        startKeyboardObserver()
+        let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(self.hideKeyboardOnSwipeDown))
+                swipeDown.delegate = self
+        swipeDown.direction =  UISwipeGestureRecognizer.Direction.down
+                self.view.addGestureRecognizer(swipeDown)
+        
     }
 
     @IBAction func emailTFAction(_ sender: UITextField) {
@@ -97,6 +106,7 @@ final class SignUpVC: BaseViewController {
     }
     
     @IBAction func confPassTFAction(_ sender: UITextField) {
+        updateButton.isEnabled = true
         if let confPasswordText = sender.text, !confPasswordText.isEmpty,
            let passwordText = passwordTF.text, !passwordText.isEmpty
         {
@@ -107,14 +117,28 @@ final class SignUpVC: BaseViewController {
         confirmPassError.isHidden = isConfPassword
     }
     
-    @IBAction func continueButtonAction() {
+    @IBAction func updateButtonAction() {
+        updateButton.isEnabled = true
+
         if let email = emailTF.text,
-              let password = passwordTF.text
-           {
-               let userModel = UserModel(name: nameTF.text, email: email, pass: password)
-               performSegue(withIdentifier: "goToVerificationScreen", sender: userModel)
-           }
+           let password = passwordTF.text,
+           let name = nameTF.text
+        {
+            let userModel = UserModel(name: name, email: email, pass: password)
+            let _: () = UserDafultsService.saveUserModel(userModel: userModel)
+            
+            let storyboard = UIStoryboard(name: "MainStoryboard", bundle: nil)
+            guard let vc = storyboard.instantiateViewController(withIdentifier: "InfoVС") as? InfoVC else { return }
+            
+            vc.userModel = userModel
        }
+    }
+
+    
+    private func updateButtonState() {
+        updateButton.isEnabled = isValidEmail && isConfPassword && passwordStrength != .veryWeak
+        
+    }
     
     private func setupStrongIndicatorsViews()  {
         strongPassIndicatorsViews.enumerated().forEach { index, view in
@@ -125,11 +149,7 @@ final class SignUpVC: BaseViewController {
             }
         }
     }
-    
-    private func updateContinueButtonState() {
-        continueButton.isEnabled = isValidEmail && isConfPassword && passwordStrength != .veryWeak
-    }
-
+ 
     @IBAction func showButtonTaped(_ sender: UIButton) {
         passwordTF.isSecureTextEntry.toggle()
                 if passwordTF.isSecureTextEntry {
@@ -143,31 +163,11 @@ final class SignUpVC: BaseViewController {
                 }
             }
 
-
-    private func startKeyboardObserver() {
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
-
-    @objc private func keyboardWillShow(notification: Notification) {
-        guard let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
-            return
-        }
-        let contentInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: keyboardSize.height, right: 0.0)
-        scrollView.contentInset = contentInsets
-        scrollView.scrollIndicatorInsets = contentInsets
-    }
-
-    @objc private func keyboardWillHide() {
-        let contentInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0)
-        scrollView.contentInset = contentInsets
-        scrollView.scrollIndicatorInsets = contentInsets
-    }
-       
-    // Navigation
+  
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let destVC = segue.destination as? VerificationsVC,
               let userModel = sender as? UserModel else { return }
         destVC.userModel = userModel
     }
+    
 }

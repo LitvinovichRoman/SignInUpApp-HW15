@@ -9,7 +9,7 @@ import UIKit
 
 final class HelloVC: UIViewController {
     
-    var userModel: UserModel?
+     var userModel: UserModel?
     
     @IBOutlet private var infoLabel: UILabel!
     @IBOutlet private var subView: UIView!
@@ -22,7 +22,7 @@ final class HelloVC: UIViewController {
         continueButton.layer.cornerRadius = continueButton.frame.size.height / 2
         continueButton.layer.masksToBounds = true
 
-        if let userName = userModel?.userName {
+        if let userName = userModel?.name {
                    infoLabel.text = "\(userName) to our Cool App"
                } else {
                    infoLabel.text = "Welcome to our Cool App"
@@ -35,16 +35,8 @@ final class HelloVC: UIViewController {
     }
 
     @IBAction func continueButtonAction() {
-        navigationController?.popToRootViewController(animated: true)
+        guard let userModel = userModel else { return }
+                UserDafultsService.saveUserModel(userModel: userModel)
+                navigationController?.popToRootViewController(animated: true)
+            }
     }
-
-    /*
-      // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-}
